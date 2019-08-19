@@ -15,14 +15,11 @@ services:
       ECHO_REDIS_PORT: 6379
       ECHO_PROTOCOL: http
 
-  queue-worker:
+  php: &php
+    image: wi1dcard/webhook-site:php
     build:
       context: .
-    command: php artisan queue:work --tries=3 --timeout=10
-    depends_on:
-      - redis
-      - laravel-echo-server
-    environment: &php_env
+    environment:
       APP_ENV: local
       APP_DEBUG: "true"
       APP_URL: http://localhost:8084
@@ -33,12 +30,15 @@ services:
       QUEUE_DRIVER: redis
       ECHO_HOST_MODE: path
 
-  php:
-    build:
-      context: .
-    environment: *php_env
+  queue-worker:
+    <<: *php
+    command: php artisan queue:work --tries=3 --timeout=10
+    depends_on:
+      - redis
+      - laravel-echo-server
 
   nginx:
+    image: wi1dcard/webhook-site:nginx
     build:
       context: nginx
     ports:
