@@ -11,7 +11,7 @@ services:
       LARAVEL_ECHO_SERVER_AUTH_HOST: http://nginx
       LARAVEL_ECHO_SERVER_HOST: 0.0.0.0
       LARAVEL_ECHO_SERVER_PORT: 6001
-      ECHO_REDIS_HOST: redis
+      ECHO_REDIS_HOSTNAME: redis
       ECHO_REDIS_PORT: 6379
       ECHO_PROTOCOL: http
 
